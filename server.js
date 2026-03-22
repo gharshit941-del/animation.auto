@@ -1,19 +1,14 @@
 const express = require("express");
 const fs = require("fs");
-const axios = require("axios");
 const { exec } = require("child_process");
 const path = require("path");
+const edgeTTS = require("edge-tts");
 
 const app = express();
 app.use(express.json());
 
-// Read environment variables
-const API_KEY = process.env.ELEVENLABS_API_KEY;
-const VOICE_ID = process.env.ELEVENLABS_VOICE_ID;
-
 console.log("Server starting...");
-console.log("VOICE ID:", VOICE_ID ? "Loaded" : "Missing");
-console.log("API KEY:", API_KEY ? "Loaded" : "Missing");
+console.log("Using Edge TTS voice engine");
 
 // Health check route
 app.get("/", (req, res) => {
@@ -30,34 +25,23 @@ app.post("/generate", async (req, res) => {
     return res.status(400).send("No script provided");
   }
 
-  if (!API_KEY || !VOICE_ID) {
-    console.error("Missing API key or Voice ID");
-    return res.status(500).send("Server configuration error");
-  }
-
   try {
-    console.log("Generating voice...");
+    console.log("Generating voice with Edge TTS...");
 
-    const voiceResponse = await axios.post(
-      `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`,
-      {
-        text: script,
-        model_id: "eleven_multilingual_v2"
-      },
-      {
-        headers: {
-          "xi-api-key": API_KEY,
-          "Content-Type": "application/json"
-        },
-        responseType: "arraybuffer"
-      }
-    );
+    const voicePath = path.join(__dirname, "voice.mp3");
 
-    fs.writeFileSync("voice.mp3", voiceResponse.data);
+    // Generate voice
+    const audio = await edgeTTS.synthesize({
+      text: script,
+      voice: "en-US-AriaNeural",
+      format: "audio-24khz-48kbitrate-mono-mp3"
+    });
+
+    fs.writeFileSync(voicePath, audio);
 
     console.log("Voice generated");
 
-    // Check if bg.jpg exists
+    // Check background image
     const bgPath = path.join(__dirname, "bg.jpg");
 
     if (!fs.existsSync(bgPath)) {
@@ -67,8 +51,10 @@ app.post("/generate", async (req, res) => {
 
     console.log("Creating video with FFmpeg...");
 
+    const outputPath = path.join(__dirname, "output.mp4");
+
     exec(
-      `ffmpeg -y -loop 1 -i bg.jpg -i voice.mp3 -c:v libx264 -t 20 -pix_fmt yuv420p output.mp4`,
+      `ffmpeg -y -loop 1 -i "${bgPath}" -i "${voicePath}" -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest "${outputPath}"`,
       (error, stdout, stderr) => {
         if (error) {
           console.error("FFmpeg error:", error);
@@ -78,24 +64,18 @@ app.post("/generate", async (req, res) => {
 
         console.log("Video created");
 
-        res.download("output.mp4", "video.mp4", () => {
+        res.download(outputPath, "video.mp4", () => {
           console.log("Video sent to user");
 
           // cleanup
-          if (fs.existsSync("voice.mp3")) fs.unlinkSync("voice.mp3");
-          if (fs.existsSync("output.mp4")) fs.unlinkSync("output.mp4");
+          if (fs.existsSync(voicePath)) fs.unlinkSync(voicePath);
+          if (fs.existsSync(outputPath)) fs.unlinkSync(outputPath);
         });
       }
     );
 
   } catch (err) {
-    console.error("Error generating voice:");
-
-    if (err.response) {
-      console.error("Status:", err.response.status);
-      console.error("Data:", err.response.data.toString());
-    }
-
+    console.error("Error generating voice:", err);
     res.status(500).send("Generation failed");
   }
 });

@@ -3,8 +3,11 @@ services:
     name: animation-auto-engine
     env: node
     plan: free
+
     buildCommand: |
       apt-get update
-      apt-get install -y ffmpeg
+      apt-get install -y ffmpeg python3 python3-pip
+      pip3 install -r requirements.txt
       npm install
+
     startCommand: node server.js

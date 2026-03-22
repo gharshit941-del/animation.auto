@@ -14,6 +14,8 @@ app.post("/generate", async (req, res) => {
   const script = req.body.script;
 
   try {
+    // DEBUG — check if VOICE_ID is loaded
+console.log("VOICE_ID:", process.env.VOICE_ID);
     // Generate voice
     const response = await axios.post(
       `https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE_ID}`,

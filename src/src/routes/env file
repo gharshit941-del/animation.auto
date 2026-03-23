@@ -1,4 +1,4 @@
-MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/animationauto?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://gharshit941_db_user:TmeuMGppMOjMur6z@cluster1.my3i3mp.mongodb.net/?appName=cluster1
 RAZORPAY_KEY_ID=your_razorpay_key
 RAZORPAY_KEY_SECRET=your_razorpay_secret
 JWT_SECRET=your_super_secret_key_123456

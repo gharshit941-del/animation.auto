@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Generator - Animation.auto</title>
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .anime-form { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        textarea { 
+            width: 100%; 
+            height: 200px; 
+            padding: 20px; 
+            border: 2px solid #ff9a9e; 
+            border-radius: 15px; 
+            font-family: inherit;
+            font-size: 16px;
+            resize: vertical;
+        }
+        .generate-anime { 
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e); 
+            color: white; 
+            border: none; 
+            padding: 20px 40px; 
+            border-radius: 50px; 
+            font-size: 18px; 
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .progress { display: none; margin-top: 20px; }
+        .result { display: none; margin-top: 30px; text-align: center; }
+        .result video { max-width: 100%; border-radius: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="font-size: 3rem; background: linear-gradient(45deg, #ff6b6b, #ff1744); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">🎌 Anime Generator</h1>
+            <p style="color: #666; font-size: 1.2rem;">Convert your script to anime video (₹49/video)</p>
+        </div>
+        
+        <div class="anime-form">
+            <div class="form-group">
+                <label> Your Script (Describe scenes, characters, actions)</label>
+                <textarea id="script" placeholder="Example: 
+Scene 1: A young samurai walks through cherry blossom forest. He draws his katana as enemy ninjas appear...
+Scene 2: Epic sword fight begins..."></textarea>
+            </div>
+            <button class="generate-anime" onclick="generateAnime()"> Generate Anime Video</button>
+            <div class="progress" id="progress">
+                <div style="width: 100%; height: 10px; background: #f0f0f0; border-radius: 10px; overflow: hidden;">
+                    <div id="progressBar" style="height: 100%; background: linear-gradient(90deg, #ff6b6b, #ff8e8e); width: 0%; transition: width 0.3s;"></div>
+                </div>
+                <p>Processing your anime... This takes 2-5 minutes</p>
+            </div>
+        </div>
+        
+        <div class="result" id="result">
+            <h2> Your Anime Video is Ready!</h2>
+            <video id="animeVideo" controls></video>
+            <p style="margin-top: 20px;">
+                <a href="#" class="cta-button" style="background: #4CAF50; color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; display: inline-block;">💾 Download HD</a>
+                <a href="#" class="cta-button" style="background: #2196F3; color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; display: inline-block; margin-left: 10px;">📱 Share to Instagram</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        async function generateAnime() {
+            const script = document.getElementById('script').value;
+            if (!script.trim()) {
+                alert('Please write your script first!');
+                return;
+            }
+            
+            document.querySelector('.generate-anime').style.display = 'none';
+            document.getElementById('progress').style.display = 'block';
+            
+            // Simulate anime generation progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 95) progress = 95;
+                document.getElementById('progressBar').style.width = progress + '%';
+            }, 1000);
+            
+            // Simulate API call (5 minutes)
+            setTimeout(() => {
+                clearInterval(interval);
+                document.getElementById('progressBar').style.width = '100%';
+                
+                setTimeout(() => {
+                    document.getElementById('progress').style.display = 'none';
+                    document.getElementById('result').style.display = 'block';
+                    document.getElementById('animeVideo').src = 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_5mb.mp4';
+                    document.querySelector('.generate-anime').style.display = 'block';
+                }, 2000);
+            }, 30000); // 30 seconds demo
+        }
+    </script>
+</body>
+</html>

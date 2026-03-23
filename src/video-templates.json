@@ -1,0 +1,17 @@
+[
+  {
+    "id": "motivational",
+    "name": "Motivational Quotes",
+    "thumbnail": "https://picsum.photos/320/240?random=1"
+  },
+  {
+    "id": "facts",
+    "name": "Interesting Facts",
+    "thumbnail": "https://picsum.photos/320/240?random=2"
+  },
+  {
+    "id": "top5",
+    "name": "Top 5 Lists",
+    "thumbnail": "https://picsum.photos/320/240?random=3"
+  }
+]

@@ -9,9 +9,9 @@ Faceless video & anime automation platform
 4. Deploy!
 
 ## Features
-✅ Unlimited free for owner (phone: 9999999999)  
-✅ UPI payments (Razorpay)  
-✅ Faceless video generator  
-✅ Script-to-anime converter  
-✅ Real-time progress  
-✅ Dashboard & analytics
+Unlimited free for owner (phone: 9999999999)  
+UPI payments (Razorpay)  
+Faceless video generator  
+Script-to-anime converter  
+Real-time progress  
+Dashboard & analytics

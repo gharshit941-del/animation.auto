@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation.auto - Faceless Video Automation</title>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        .hero { 
+            text-align: center; 
+            padding: 100px 20px 50px;
+            color: white;
+        }
+        .hero h1 { 
+            font-size: 4rem; 
+            margin-bottom: 20px; 
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p { font-size: 1.5rem; margin-bottom: 40px; opacity: 0.9; }
+        
+        .features { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+            margin: 60px 0;
+        }
+        .feature-card { 
+            background: rgba(255,255,255,0.1); 
+            backdrop-filter: blur(20px);
+            padding: 40px; 
+            border-radius: 20px; 
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .feature-card:hover { transform: translateY(-10px); }
+        .feature-icon { font-size: 4rem; margin-bottom: 20px; }
+        
+        .pricing { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 30px; 
+            margin: 60px 0;
+        }
+        .price-card { 
+            background: rgba(255,255,255,0.95); 
+            padding: 40px; 
+            border-radius: 20px; 
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .price-card.featured { 
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+            transform: scale(1.05);
+        }
+        .price-amount { font-size: 3rem; font-weight: 700; margin: 20px 0; }
+        
+        .cta-button { 
+            background: linear-gradient(45deg, #FF6B6B, #FF8E8E); 
+            color: white; 
+            padding: 15px 40px; 
+            border: none; 
+            border-radius: 50px; 
+            font-size: 1.2rem; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        
+        .dashboard-login { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            z-index: 1000;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .features, .pricing { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-login">
+        <a href="/dashboard.html" class="cta-button">Dashboard</a>
+        <button onclick="login()" class="cta-button">Login</button>
+    </div>
+    
+    <div class="container">
+        <section class="hero">
+            <h1>Animation.auto</h1>
+            <p>Create viral faceless videos & anime in minutes 🚀</p>
+            <div>
+                <a href="#pricing" class="cta-button">Get Started Free</a>
+                <a href="/anime.html" class="cta-button" style="background: linear-gradient(45deg, #4ECDC4, #44A08D);">Try Anime Generator</a>
+            </div>
+        </section>
+        
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🎥</div>
+                <h3>Faceless Videos</h3>
+                <p>Auto-generate viral shorts with AI voices, captions & effects</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎭</div>
+                <h3>Anime Generator</h3>
+                <p>Convert any script to professional anime videos</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">₹</div>
+                <h3>UPI Payments</h3>
+                <p>Pay easily with PhonePe, GPay, Paytm in INR</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Unlimited Free</h3>
+                <p>Owner gets unlimited access forever</p>
+            </div>
+        </section>
+        
+        <section id="pricing" class="pricing">
+            <div class="price-card">
+                <h3>Free</h3>
+                <div class="price-amount">₹0</div>
+                <ul style="text-align: left; margin: 20px 0;">
+                    <li>5 videos/month</li>
+                    <li>Basic templates</li>
+                    <li>Watermark</li>
+                </ul>
+                <button class="cta-button" onclick="startFree()">Start Free</button>
+            </div>
+            <div class="price-card featured">
+                <h3>Pro</h3>
+                <div class="price-amount">₹199<span style="font-size: 1rem;">/month</span></div>
+                <ul style="text-align: left; margin: 20px 0;">
+                    <li>Unlimited videos</li>
+                    <li>No watermark</li>
+                    <li>Premium templates</li>
+                    <li>Priority support</li>
+                </ul>
+                <button class="cta-button" onclick="buyPro()" style="background: white; color: #333;">Buy Pro ₹199</button>
+            </div>
+            <div class="price-card">
+                <h3>Anime</h3>
+                <div class="price-amount">₹49/video</div>
+                <ul style="text-align: left; margin: 20px 0;">
+                    <li>Script to anime</li>
+                    <li>HD quality</li>
+                    <li>Custom characters</li>
+                </ul>
+                <a href="/anime.html" class="cta-button">Try Anime</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Free login for owner (use your phone number)
+        function login() {
+            const phone = prompt('Enter phone for login (Owner: 9999999999)');
+            if (phone === '9999999999') {
+                localStorage.setItem('token', 'owner_unlimited');
+                window.location.href = '/dashboard.html';
+            } else {
+                alert('Use owner phone: 9999999999 for unlimited free access');
+            }
+        }
+        
+        function startFree() {
+            login();
+        }
+        
+        function buyPro() {
+            alert('Redirecting to UPI payment... (Demo)');
+        }
+    </script>
+</body>
+</html>

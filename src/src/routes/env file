@@ -1,0 +1,5 @@
+MONGODB_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/animationauto?retryWrites=true&w=majority
+RAZORPAY_KEY_ID=your_razorpay_key
+RAZORPAY_KEY_SECRET=your_razorpay_secret
+JWT_SECRET=your_super_secret_key_123456
+PORT=3000
